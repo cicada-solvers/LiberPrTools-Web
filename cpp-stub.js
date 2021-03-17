@@ -86,7 +86,7 @@ window.endl = "\r\n";
 
 function terminate(ex){
     cout("Aborted"+endl)
-    throw e;
+    throw ex;
 }
 
 async function call_with_exceptions(func){
