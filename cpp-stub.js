@@ -1,7 +1,17 @@
+Error.prototype.what=function(){ return this.message; };
+
+class InvalidArgumentError extends TypeError {
+  constructor(message) {
+    super(message);
+    this.name = "std::invalid_argument";
+  }
+}
+
+
 function stoi(s){
     console.log(" stoi",s)
     let i = parseInt(s,10);
-    if(isNaN(i)) throw "invalid integer input: "+s;
+    if(isNaN(i)) throw new InvalidArgumentError('stoi');
     return i;
 }
 
@@ -73,3 +83,19 @@ function cout(s){
 }
 
 window.endl = "\r\n";
+
+function terminate(ex){
+    cout("Aborted"+endl)
+    throw e;
+}
+
+async function call_with_exceptions(func){
+    try{
+        await func();
+    }catch(ex){
+        cout("terminate called after throwing an instance of '"+ex.name+"'"+endl);
+        cout("what():  "+ex.what()+endl)
+        terminate(ex);
+    }
+}
+
